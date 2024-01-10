@@ -1,0 +1,169 @@
+<h4>Formularios <small> Reactivo </small></h4>
+<hr>
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="submit()">
+
+    <div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Nombre</label>
+            <div class="col">
+                <input [ngClass]="{'is-invalid': nombreNoValido}" formControlName="nombre" class="form-control"
+                    type="text" placeholder="Nombre">
+                @if (nombreNoValido){
+                <small class="form-text text-danger">
+                    El campo es requerido y minimo 5 letras
+                </small>
+                }
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Apellido</label>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Apellido" formControlName="apellido"
+                    [ngClass]="{'is-invalid': apellidoNoValido}">
+                @if (apellidoNoValido){
+                <small class="form-text text-danger">
+                    El campo es requerido y minimo 5 letras
+                </small>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Correo</label>
+        <div class="col">
+            <input class="form-control" type="email" placeholder="Correo electrónico" formControlName="correo"
+                [ngClass]="{'is-invalid': correoNoValido}">
+            @if (correoNoValido){
+            <small class="form-text text-danger">
+                El campo es requerido y valido
+            </small>
+            }
+        </div>
+    </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Usuario</label>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Nombre de usuario" formControlName="usuario"
+                    [ngClass]="{'is-invalid': usuarioNoValido}">
+                @if (usuarioNoValido){
+                <small class="form-text text-danger">
+                    El usuario no es valido ya fue tomado
+                </small>
+                }
+            </div>
+        </div>
+
+    <!-- password -->
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Contrasena</label>
+                <div class="col">
+                    <input class="form-control" type="password" placeholder="Contrasena" formControlName="pass1" [ngClass]="{'is-invalid': pass1NoValido}">
+                    @if (pass1NoValido){
+                        <small class="form-text text-danger">
+                            La contrasena es requerida
+                        </small>
+                    }
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label">Repita contrasena</label>
+                <div class="col">
+                    <input class="form-control" type="password" placeholder="Repita Contrasena" formControlName="pass2" [ngClass]="{'is-invalid': pass2NoValido}">
+                    @if (pass2NoValido){
+                        <small class="form-text text-danger">
+                            Las contrasenas deben ser iguales
+                        </small>
+                    }
+                </div>
+            </div>
+
+
+
+    <!-- password -->
+
+
+    <div class="form-group row" formGroupName="direccion">
+        <label class="col-2 col-form-label">Direccion</label>
+        <div class="form-row col">
+            <div class="col">
+                <input type="text" formControlName="distrito" name="" id="" class="form-control" placeholder="Distrito"
+                    [ngClass]="{'is-invalid': distritoNoValido}">
+                @if (distritoNoValido){
+                <small class="form-text text-danger">
+                    El campo es requerido y valido
+                </small>
+                }
+            </div>
+
+            <div class="col">
+                <input type="text" formControlName="ciudad" name="" id="" class="form-control" placeholder="Ciudad"
+                    [ngClass]="{'is-invalid': ciudadNoValido}">
+                @if (ciudadNoValido){
+                <small class="form-text text-danger">
+                    El campo es requerido y valido
+                </small>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <table class="table" aria-label="Table with data">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pasatiempo</th>
+                        <th>Borrar</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="pasatiempos">
+                    @for (controlArray of pasatiempos.controls ; track idx; let idx = $index) {
+                        <tr>
+                            <td>{{idx + 1}}</td>
+                            <td>
+                                <input type="text" class="form-control" [formControlName]="idx">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" (click)="borrarPasatiempo(idx)">
+                                    Borrar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary mt-3 mb-5 btn-block" (click)="agregarPasatiempo()">
+                + Agregar
+             </button>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col">
+            <button type="submit" class="btn btn-outline-primary btn-block">
+                Guardar
+            </button>
+        </div>
+    </div>
+
+</form>
+
+<hr>
+<pre>
+    Esto formulario: {{ form.valid }}
+    <br>
+    Status: {{ form.status }}
+</pre>
+
+<pre>
+    {{ form.value | json }}
+</pre>
